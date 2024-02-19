@@ -1,14 +1,14 @@
-const esbuild = require('esbuild');
-const glob = require('glob');
-const fs = require('fs');
-const path = require('path');
+import { build } from 'esbuild';
+import { sync } from 'glob';
+import { readFileSync, writeFileSync } from 'fs';
+import { dirname } from 'path';
 
 const transpileNodeModules = async () => {
     // Get package.json file of mdb-reader module
     const packageJsonPath = '../package.json';
 
     try {
-        const json = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
+        const json = JSON.parse(readFileSync(packageJsonPath, 'utf-8'));
 
         // Skip unless the type of the package is ESM
         if (!json.name || json.type !== 'module') {
@@ -17,10 +17,10 @@ const transpileNodeModules = async () => {
 
         console.log(`🦀 Transpiling ${json?.name}...`);
 
-        const dir = path.dirname(packageJsonPath);
+        const dir = dirname(packageJsonPath);
 
         // Get all .js files unless they are in a nested node_modules folder
-        const entryPoints = glob.sync(`${dir}/**/*.js`).filter(
+        const entryPoints = sync(`${dir}/**/*.js`).filter(
             (d) => !d.includes(`${dir}/node_modules/`)
         );
 
@@ -30,7 +30,7 @@ const transpileNodeModules = async () => {
 
         // Transpile each .js file
         for (const file of entryPoints) {
-            await esbuild.build({
+            await build({
                 entryPoints: [file],
                 allowOverwrite: true,
                 outfile: file,
@@ -45,7 +45,7 @@ const transpileNodeModules = async () => {
 
         // Change the type of the package to commonjs
         json.type = 'commonjs';
-        fs.writeFileSync(packageJsonPath, JSON.stringify(json, null, 2));
+        writeFileSync(packageJsonPath, JSON.stringify(json, null, 2));
     } catch (e) {
         console.log('Error: Wasnt able to run postinstall script. Make sure the packages inside oslo-extractor-uml-ea are installed.')
         console.error(e);
