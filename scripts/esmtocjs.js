@@ -2,10 +2,21 @@
 /* eslint-disable no-restricted-imports */
 import { build } from 'esbuild';
 import { sync } from 'glob';
+import { readFileSync, writeFileSync } from 'fs';
 
 const transpileNodeModules = async () => {
+    // Get package.json file of mdb-reader module
+    const packageJsonPath = './package.json';
+
     try {
-        console.log(`🦀 Transpiling...`);
+        const json = JSON.parse(readFileSync(packageJsonPath, 'utf-8'));
+
+        // Skip unless the type of the package is ESM
+        if (!json.name || json.type !== 'module') {
+            return;
+        }
+
+        console.log(`🦀 Transpiling ${json?.name}...`);
 
         const dir = "lib"
 
@@ -34,8 +45,10 @@ const transpileNodeModules = async () => {
         }
 
         // Change the type of the package to commonjs
+        json.type = 'commonjs';
+        writeFileSync(packageJsonPath, JSON.stringify(json, null, 2));
     } catch (e) {
-        console.log('Error: Wasnt able to run postinstall script.')
+        console.log('Error: Wasnt able to convert the project from ESM to CommonJS.')
         console.error(e);
     }
 }
