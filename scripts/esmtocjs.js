@@ -1,11 +1,12 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-restricted-imports */
 import { build } from 'esbuild';
 import { sync } from 'glob';
 import { readFileSync, writeFileSync } from 'fs';
-import { dirname } from 'path';
 
 const transpileNodeModules = async () => {
     // Get package.json file of mdb-reader module
-    const packageJsonPath = '../package.json';
+    const packageJsonPath = './package.json';
 
     try {
         const json = JSON.parse(readFileSync(packageJsonPath, 'utf-8'));
@@ -17,7 +18,7 @@ const transpileNodeModules = async () => {
 
         console.log(`🦀 Transpiling ${json?.name}...`);
 
-        const dir = dirname(packageJsonPath);
+        const dir = "lib"
 
         // Get all .js files unless they are in a nested node_modules folder
         const entryPoints = sync(`${dir}/**/*.js`).filter(
