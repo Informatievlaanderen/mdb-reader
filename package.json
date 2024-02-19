@@ -71,6 +71,7 @@
     "prepare:node": "cp src/environment/node.ts src/environment/index.ts",
     "prepare:browser": "cp src/environment/browser.ts src/environment/index.ts",
     "build": "npm run build:node && npm run build:browser",
+    "postbuild": "node ./scripts/esmtocjs.js",
     "build:node": "npm run prepare:node && tsc -P tsconfig.json",
     "build:browser": "npm run prepare:browser && tsc -P tsconfig.browser.json",
     "test": "npm run test:unit && npm run test:esm",
