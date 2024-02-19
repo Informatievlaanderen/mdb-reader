@@ -1,23 +1,23 @@
 [![npm](https://img.shields.io/npm/v/mdb-reader)](https://www.npmjs.com/package/mdb-reader)
-[![tests](https://github.com/andipaetzold/mdb-reader/actions/workflows/push.yml/badge.svg?branch=main)](https://github.com/andipaetzold/mdb-reader/actions/workflows/push.yml?query=branch%3Amain)
-[![downloads](https://img.shields.io/npm/dm/mdb-reader)](https://www.npmjs.com/package/mdb-reader)
-[![license](https://img.shields.io/github/license/andipaetzold/mdb-reader)](https://github.com/andipaetzold/mdb-reader/blob/main/LICENSE)
-[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
 # MDB Reader
 
-JavaScript library to read data from Access databases.
+JavaScript library to read data from Access databases. This is a fork of the original [mdb-reader](https://github.com/andipaetzold/mdb-reader). The original library was converted to ESM, which is not compatible with out [OSLO-UML-Transformer]() project since that is written in CommonJS. This fork is a CommonJS version of the original library. There is a conversion script located in the `scripts` directory that will convert the original library to CommonJS. 
+
+As an extra tweak to the original library, the `/lib` folder is present inside the Github repository. This is to allow the library to be used directly in the OSLO-UML-Transformer. We could also publish the library to NPM, but that would be an extra step which was not needed at this time. 
+
+Since this is a fork of the 3.0.0 version of `mdb-reader`, the code should remain runnable for the OSLO-UML-Transformer. If newer versions get released of this package and we want to use them, we will have to merge the upstream changes from the original library into this fork.
 
 ## Installation
 
 ```sh
-npm install mdb-reader
+npm install https://github.com/Informatievlaanderen/mdb-reader.git
 ```
 
 or
 
-```sh
-yarn add mdb-reader
+```sh 
+yarn add https://github.com/Informatievlaanderen/mdb-reader.git
 ```
 
 ## Compatibility
@@ -244,7 +244,7 @@ The data types returned by `Table.getData()` depends on the column type. Null va
 
 ### Build
 
-To build the library, first install the dependencies, then run `npm run build` for a single build or `npm run watch` for automatic rebuilds.
+To build the library, first install the dependencies, then run `npm run build` for a single build or `npm run watch` for automatic rebuilds. There is a `postbuild` script that will run automatically after the build and does the conversion to CommonJS. 
 
 ```sh
 npm install
