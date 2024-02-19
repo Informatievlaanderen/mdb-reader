@@ -1,5 +1,5 @@
 .parcel-cache
 tsconfig.test.json
-/lib/
+# /lib/
 /node_modules/
 /test-results/
