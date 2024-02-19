@@ -2,11 +2,14 @@
 
 # MDB Reader
 
-JavaScript library to read data from Access databases. This is a fork of the original [mdb-reader](https://github.com/andipaetzold/mdb-reader). The original library was converted to ESM, which is not compatible with out [OSLO-UML-Transformer]() project since that is written in CommonJS. This fork is a CommonJS version of the original library. There is a conversion script located in the `scripts` directory that will convert the original library to CommonJS. 
+JavaScript library to read data from Access databases. This is a fork of the original [mdb-reader](https://github.com/andipaetzold/mdb-reader). The original library was converted to ESM, which is not compatible with out [OSLO-UML-Transformer](https://github.com/Informatievlaanderen/OSLO-UML-Transformer) project since that is written in CommonJS. This fork is a CommonJS version of the original library. There is a conversion script located in the `scripts` directory that will convert the original library to CommonJS. 
 
-As an extra tweak to the original library, the `/lib` folder is present inside the Github repository. This is to allow the library to be used directly in the OSLO-UML-Transformer. We could also publish the library to NPM, but that would be an extra step which was not needed at this time. 
+Since the conversion script converts the [package.json](https://github.com/Informatievlaanderen/mdb-reader/commit/98e1dc65780028e14fef850154084ba402756b2d) file, this project will not run in its original form. If you want to use the original package.json, which is an ESM package, you can get it from the original library!
+
+As an extra tweak to the original library, the `/lib` folder is present inside the Github repository. This is to allow the library to be used directly in the OSLO-UML-Transformer. We could also publish the library to NPM, but that would be an extra step which was not needed at this time. When building the project, the `postbuild` script will run, which will convert the library from an ESM module to CommonJS using `esbuild`.
 
 Since this is a fork of the 3.0.0 version of `mdb-reader`, the code should remain runnable for the OSLO-UML-Transformer. If newer versions get released of this package and we want to use them, we will have to merge the upstream changes from the original library into this fork.
+
 
 ## Installation
 
